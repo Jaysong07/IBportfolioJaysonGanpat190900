@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IB portfolio Jayson Ganpat 190900y</title>
+  <style>
+    :root {
+      --gradient: linear-gradient(270deg, #ffcc66, #ff99cc);
+      --primary: #2a2a2a;
+      --secondary: #f8f9fa;
+      --dark-bg: #121212;
+      --dark-card: #1a1a1a;
+      --glow-color: rgba(255, 204, 102, 0.7);
+      --glow-color-dark: rgba(255, 153, 204, 0.7);
+    }
+
+    /* Background gradient animation for header */
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Glowing effect keyframes */
+    @keyframes glowing {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    /* Animate the hue of the gradient border */
+    @keyframes borderHue {
+      from { filter: hue-rotate(0deg); }
+      to   { filter: hue-rotate(360deg); }
+    }
+
+    /* Border glow animation for dropdown */
+    @keyframes borderGlow {
+      0% {
+        box-shadow: 0 0 0 0 transparent;
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      30% {
+        box-shadow: 0 0 20px 3px var(--glow-color);
+        border-color: rgba(255, 255, 255, 0.9);
+      }
+      100% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    @keyframes borderGlowDark {
+      0% {
+        box-shadow: 0 0 0 0 transparent;
+        border-color: rgba(255, 255, 255, 0.05);
+      }
+      30% {
+        box-shadow: 0 0 20px 3px var(--glow-color-dark);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+      100% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    /* Float animation for 3D elements */
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    /* Pulse animation for interactive elements */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Circular loading animation */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Shimmer effect animation */
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.5s ease, color 0.3s ease;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--secondary);
+      overflow-x: hidden;
+      cursor: none; /* Hide default cursor for custom cursor */
+    }
+
+    body.dark-mode {
+      background: var(--dark-bg);
+      --secondary: var(--dark-bg);
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--gradient);
+      pointer-events: none;
+      mix-blend-mode: difference;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+      box-shadow: 0 0 20px 5px rgba(255, 204, 102, 0.3);
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(255, 204, 102, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor.hover, .cursor-follower.hover {
+      transform: translate(-50%, -50%) scale(1.5);
+    }
+
+    /* Particle background */
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      top: 0;
+      left: 0;
+    }
+
+    /* Header Section with 3D Perspective */
+    .top-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: var(--gradient);
+      background-size: 400% 400%;
+      animation: gradientAnimation 45s ease infinite;
+      z-index: 1;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+      perspective: 1000px;
+    }
+
+    .title-3d-container {
+      transform-style: preserve-3d;
+      transform: rotateX(10deg) rotateY(10deg);
+      transition: transform 0.3s ease;
+    }
+
+    .top-section h1 {
+      font-size: 4rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      mix-blend-mode: overlay;
+      color: rgba(255, 255, 255, 0.5);
+      position: relative;
+      transform: translateZ(50px);
+    }
+
+    /* Top Navigation with dropdowns */
+    .nav-container {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .nav-item {
+      padding: 0.8rem 1.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 50px;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    /* Dark mode toggle */
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      width: 60px;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 0 5px;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle-switch {
+      width: 22px;
+      height: 22px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s ease;
+    }
+
+    body.dark-mode .theme-toggle-switch {
+      transform: translateX(30px);
+      background: var(--dark-card);
+    }
+
+    /* Dropdown styling for top navigation */
+    .nav-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .nav-dropdown-content {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: calc(100% + 10px);
+      /* Center the dropdown menu */
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px) scale(0.97);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      min-width: 250px;
+      padding: 0.7rem 0;
+      border-radius: 16px;
+      box-shadow: 0 0 0 0 transparent;
+      z-index: 100;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transform-origin: top center;
+    }
+
+    /* Add a triangle pointer to the dropdown */
+    .nav-dropdown-content::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid rgba(255, 255, 255, 0.15);
+      transition: border-bottom-color 0.3s ease;
+    }
+
+    .nav-dropdown-content a {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      color: var(--primary);
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .nav-dropdown-content a:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(5px);
+    }
+
+    .nav-dropdown:hover .nav-dropdown-content {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+      animation: borderGlow 1.2s ease-out forwards;
+    }
+
+    body.dark-mode .nav-dropdown:hover .nav-dropdown-content {
+      animation: borderGlowDark 1.2s ease-out forwards;
+    }
+
+    body.dark-mode .nav-dropdown-content {
+      background: rgba(26, 26, 26, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    body.dark-mode .nav-dropdown-content::before {
+      border-bottom: 8px solid rgba(26, 26, 26, 0.8);
+    }
+
+    body.dark-mode .nav-dropdown-content a {
+      color: #fff;
+    }
+
+    body.dark-mode .nav-dropdown-content a:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Content Section */
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      margin-top: 90vh;
+      padding: 4rem 2rem;
+    }
+
+    .section {
+      max-width: 1200px;
+      margin: 0 auto 4rem;
+      padding: 2rem;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+      transform: translateY(50px);
+      opacity: 0;
+      transition: all 0.6s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Glass morphism effect */
+    .section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .section:hover::before {
+      opacity: 1;
+    }
+
+    body.dark-mode .section {
+      background: var(--dark-card);
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .section.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Typing Effect Paragraph */
+    #typing-text {
+      font-size: 1.4rem;
+      line-height: 1.8;
+      color: var(--primary);
+      font-weight: 300;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      white-space: pre-wrap;
+      position: relative;
+    }
+
+    /* Blinking cursor effect */
+    #typing-text::after {
+      content: '|';
+      position: absolute;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    body.dark-mode #typing-text {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Interactive timeline */
+    .timeline {
+  position: relative;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1rem 0;
+}
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      background: linear-gradient(to bottom, #ffcc66, #ff99cc);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 4px;
+    }
+
+    .timeline-item {
+      position: relative;
+      width: 50%;
+      padding: 0 40px;
+      margin-bottom: 50px;
+      opacity: 0;
+      transition: all 0.5s ease;
+    }
+
+    .timeline-item.visible {
+      opacity: 1;
+    }
+
+    .timeline-item:nth-child(odd) {
+      left: 0;
+      text-align: right;
+    }
+
+    .timeline-item:nth-child(even) {
+      left: 50%;
+      text-align: left;
+    }
+
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #ffcc66;
+      border-radius: 50%;
+      top: 10px;
+      box-shadow: 0 0 0 4px rgba(255, 204, 102, 0.2);
+    }
+
+    .timeline-item:nth-child(odd)::after {
+      right: -10px;
+    }
+
+    .timeline-item:nth-child(even)::after {
+      left: -10px;
+    }
+
+    .timeline-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    body.dark-mode .timeline-content {
+      background: var(--dark-card);
+      color: white;
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .timeline-content h3 {
+      margin-top: 0;
+      color: #ffcc66;
+    }
+
+    body.dark-mode .timeline-content h3 {
+      color: #ffcc66;
+    }
+
+    /* Button Container in the Content Section */
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Main Button Styles with hover effect */
+    .main-button {
+      position: relative;
+      padding: 1.5rem 2.5rem;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px;
+      background: var(--secondary);
+      color: var(--primary);
+      cursor: pointer;
+      overflow: hidden;
+      min-width: 220px;
+      text-align: center;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s ease;
+      z-index: 0;
+    }
+
+    .main-button::before {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      background: linear-gradient(270deg, #ffcc66, #ff99cc, #ffcc66);
+      background-size: 400%;
+      filter: blur(8px);
+      opacity: 0;
+      z-index: -2;
+      border-radius: inherit;
+      animation: glowing 8s ease-in-out infinite;
+      animation-play-state: paused;
+      transition: opacity 0.2s ease;
+    }
+
+    .main-button:hover::before {
+      animation-play-state: running;
+      opacity: 0.7;
+    }
+
+    .main-button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 2px;
+      background: var(--gradient);
+      border-radius: inherit;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+              mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: -1;
+    }
+
+    .main-button:hover::after {
+      opacity: 1;
+      animation: borderHue 3s linear infinite;
+    }
+
+    .main-button:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-button:active {
+      transform: scale(0.98);
+    }
+
+    body.dark-mode .main-button {
+      background: var(--dark-card);
+      color: #fff;
+    }
+
+    /* Parallax effect */
+    .parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffcc66' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .top-section h1 {
+        font-size: 2.5rem;
+      }
+      .content-wrapper {
+        margin-top: 60vh;
+        padding: 2rem 1rem;
+      }
+      .main-button {
+        min-width: 180px;
+        padding: 1.2rem 2rem;
+        font-size: 1rem;
+      }
+      .button-container {
+        flex-wrap: wrap;
+      }
+      .nav-dropdown-content {
+        min-width: 200px;
+        left: 0;
+        transform: translateX(0) translateY(-10px) scale(0.97);
+      }
+      .nav-dropdown:hover .nav-dropdown-content {
+        transform: translateX(0) translateY(0) scale(1);
+      }
+      .nav-dropdown-content::before {
+        left: 20%;
+      }
+      .timeline::before {
+        left: 20px;
+      }
+      .timeline-item {
+        width: 100%;
+        padding-left: 50px;
+        padding-right: 0;
+        text-align: left;
+      }
+      .timeline-item:nth-child(odd) {
+        left: 0;
+        text-align: left;
+      }
+      .timeline-item:nth-child(even) {
+        left: 0;
+      }
+      .timeline-item:nth-child(odd)::after {
+        left: -10px;
+        right: auto;
+      }
+      .timeline-item {
+  padding: 0 40px 50px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .timeline-item {
+    padding-left: 50px;
+    padding-right: 0;
+    margin-bottom: 40px;
+  }
+
+}
+    }
+  </style>
+</head>
+<body>
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Parallax Background -->
+  <div class="parallax-bg"></div>
+
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <!-- Header Section -->
+  <div class="top-section">
+    <div class="title-3d-container">
+      <h1>IB portfolio Jayson Ganpat 190900</h1>
+    </div>
+  </div>
+
+  <!-- Top Navigation with dropdowns -->
+  <nav class="nav-container">
+    <!-- Novels dropdown -->
+    <div class="nav-dropdown">
+      <a class="nav-item" href="novels.html">Novels</a>
+      <div class="nav-dropdown-content">
+        <a href="novel-1984.html">1984 by George Orwell</a>
+        <a href="novel-a-dolls-house.html">A Doll's House by Henrik Ibsen</a>
+        <a href="novel-persepolis.html">Persepolis by Marjane Satrapi</a>
+        <a href="novel-handmaid.html">The Handmaid's Tale by Margaret Atwood</a>
+        <a href="novel-never-let-me-go.html">Never Let Me Go by Kazuo Ishiguro</a>
+        <a href="novel-underground-railroad.html">The Underground Railroad by Colson Whitehead</a>
+      </div>
+    </div>
+    <!-- Body of Works dropdown -->
+    <div class="nav-dropdown">
+      <a class="nav-item" href="body-of-works.html">Body of Works</a>
+      <div class="nav-dropdown-content">
+        <a href="work-13th.html">13th (documentary)</a>
+        <a href="work-dove.html">Dove Beauty Campaign (commercials)</a>
+        <a href="work-barbara-kruger.html">Barbara Kruger (art)</a>
+        <a href="work-liza-donn.html">Liza Donnelly (cartoons)</a>
+        <a href="work-creative-soul.html">Creative Soul</a>
+        <a href="work-hunger.html">Roxanne Gay (Hunger)</a>
+      </div>
+    </div>
+    <!-- Regular nav items -->
+    <a class="nav-item" href="assessment.html">Assessment</a>
+    <a class="nav-item" href="individual-oral.html">Individual Oral</a>
+  </nav>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <div class="theme-toggle-switch"></div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="content-wrapper">
+    <section class="section" id="intro">
+      <!-- Full Introductory Text -->
+      <p id="typing-text">
+Who am I?
+
+As the title already suggests, my name is Jayson Ganpat. I am currently 18 years of age, and live in Amsterdam. Some of my interests consist out of cinematography and building things with code, which is a skill I have decided to utilize for this portfolio, to add a bit of professionalism and make the interaction a bit more fun. Even though this reflects some of my interests, this portfolio shows all the assignments that have been made in the previous and current years for the International Baccalaureate in English literature.
+      </p>
+
+      <!-- Interactive Timeline -->
+<h3 class="reveal-text" data-text="My IB Journey">My IB Journey</h3>
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-content">
+      <h3>May 2021</h3>
+      <p>Obtained FCE certificate from Cambridge Institute</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-content">
+      <h3>May 2022</h3>
+      <p>Obtained CAE certificate from Cambridge Institute</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-content">
+      <h3>September 2022</h3>
+      <p>Started IB English Literature Course</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-content">
+      <h3>2022-2023</h3>
+      <p>Completed first year of IB English Literature Course</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-content">
+      <h3>2023-2024</h3>
+      <p>Completed second year of IB English Literature Course</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-content">
+      <h3>2024-2025</h3>
+      <p>Completed third year of IB English Literature Course</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-content">
+      <h3>March 11, 2025</h3>
+      <p>Individual Oral assessment took place</p>
+    </div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-content">
+      <h3>May 8, 2025</h3>
+      <p>Official IB test date</p>
+    </div>
+  </div>
+</div>
+
+      <!-- Button Container with Interactive Buttons -->
+      <div class="button-container">
+        <button class="main-button" onclick="location.href='novels.html'">Novels</button>
+        <button class="main-button" onclick="location.href='body-of-works.html'">Body of Works</button>
+        <button class="main-button" onclick="location.href='assessment.html'">Assessment</button>
+        <button class="main-button" onclick="location.href='individual-oral.html'">Individual Oral</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Particle.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
+  <script>
+    // Page loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelector('.page-loader').style.opacity = '0';
+        document.querySelector('.page-loader').style.visibility = 'hidden';
+      }, 1500);
+    });
+
+    // Particles.js configuration
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffcc66"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+        },
+        "opacity": {
+          "value": 0.3,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 2,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffcc66",
+          "opacity": 0.2,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 1,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "grab"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 140,
+            "line_linked": {
+              "opacity": 0.5
+            }
+          },
+          "push": {
+            "particles_nb": 4
+          }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // Custom cursor
+    const cursor = document.querySelector('.cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
+    const links = document.querySelectorAll('a, button, .play-btn, .progress-container, .card-3d');
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+
+      // Delayed follow effect
+      setTimeout(() => {
+        cursorFollower.style.left = e.clientX + 'px';
+        cursorFollower.style.top = e.clientY + 'px';
+      }, 50);
+    });
+
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');
+        cursorFollower.classList.add('hover');
+      });
+      link.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');
+        cursorFollower.classList.remove('hover');
+      });
+    });
+
+    // 3D Title effect
+    const title3dContainer = document.querySelector('.title-3d-container');
+    document.addEventListener('mousemove', (e) => {
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+      title3dContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+
+    // Typing effect: significantly increased speed (1ms delay)
+    const typingText = document.getElementById('typing-text');
+    const fullText = typingText.textContent;
+    let currentCharIndex = 0;
+    typingText.textContent = ""; // Clear text to start
+
+    const updateTyping = () => {
+      // Add multiple characters at once for faster effect
+      const charsPerUpdate = 5;
+      for (let i = 0; i < charsPerUpdate; i++) {
+        if (currentCharIndex < fullText.length) {
+          typingText.textContent += fullText[currentCharIndex];
+          currentCharIndex++;
+        }
+      }
+
+      if (currentCharIndex < fullText.length) {
+        setTimeout(updateTyping, 1); // 1ms delay for much faster typing
+      } else {
+        // Remove the blinking cursor when typing is complete
+        typingText.style.removeProperty('--cursor-display');
+      }
+    };
+
+    // Start typing effect on window load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        updateTyping();
+      }, 1800); // Start typing after loader disappears
+    });
+
+    // IntersectionObserver for fade-in effect
+    const section = document.getElementById('intro');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(section);
+
+    // Reveal text animation
+    const revealTextElements = document.querySelectorAll('.reveal-text');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    revealTextElements.forEach(element => {
+      revealObserver.observe(element);
+    });
+
+    // Timeline animation
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const timelineObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    timelineItems.forEach(item => {
+      timelineObserver.observe(item);
+    });
+
+    // Dark mode toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+
+    // Optional: Scale the top section on scroll and toggle dark mode
+    const topSection = document.querySelector('.top-section');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const minScale = 0.7;
+      const scale = Math.max(minScale, 1 - Math.min(scrollY / 1000, 0.3));
+      topSection.style.transform = `scale(${scale}) translateZ(0)`;
+
+      // Apply parallax effect to background
+      document.querySelector('.parallax-bg').style.transform = `translateY(${scrollY * 0.5}px)`;
+
+      // Auto toggle dark mode based on scroll
+      if (scale <= minScale && !document.body.classList.contains('dark-mode')) {
+        document.body.classList.add('dark-mode');
+        themeToggle.querySelector('.theme-toggle-switch').style.transform = 'translateX(30px)';
+      } else if (scale > minScale && document.body.classList.contains('dark-mode')) {
+        document.body.classList.remove('dark-mode');
+        themeToggle.querySelector('.theme-toggle-switch').style.transform = 'translateX(0)';
+      }
+    });
+  </script>
+</body>
+</html>
