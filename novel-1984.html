@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1984 - IB portfolio Jayson Ganpat 190900y</title>
+  <style>
+    :root {
+      --gradient: linear-gradient(270deg, #ffc1c1, #ff0000);
+      --primary: #f8f9fa;
+      --secondary: #1a1a1a;
+      --dark-bg: #121212;
+      --dark-card: #1a1a1a;
+      --glow-color: rgba(255, 204, 102, 0.7);
+      --glow-color-dark: rgba(255, 153, 204, 0.7);
+    }
+
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes glowing {
+      0% { background-position: 0 0; }
+      50% { background-position: 400% 0; }
+      100% { background-position: 0 0; }
+    }
+
+    @keyframes borderGlow {
+      0% {
+        box-shadow: 0 0 0 0 transparent;
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      30% {
+        box-shadow: 0 0 20px 3px var(--glow-color);
+        border-color: rgba(255, 255, 255, 0.9);
+      }
+      100% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    @keyframes borderGlowDark {
+      0% {
+        box-shadow: 0 0 0 0 transparent;
+        border-color: rgba(255, 255, 255, 0.05);
+      }
+      30% {
+        box-shadow: 0 0 20px 3px var(--glow-color-dark);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+      100% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+
+    @keyframes revealCard {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.5s ease, color 0.3s ease;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--dark-bg);
+      overflow-x: hidden;
+      cursor: none;
+      color: var(--primary);
+    }
+
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--gradient);
+      pointer-events: none;
+      mix-blend-mode: difference;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease;
+      box-shadow: 0 0 20px 5px rgba(255, 204, 102, 0.3);
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid rgba(255, 204, 102, 0.5);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor.hover, .cursor-follower.hover {
+      transform: translate(-50%, -50%) scale(1.5);
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      top: 0;
+      left: 0;
+    }
+
+    .top-section {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 20vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: var(--gradient);
+      background-size: 400% 400%;
+      animation: gradientAnimation 45s ease infinite;
+      z-index: 10;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+      perspective: 1000px;
+    }
+
+    .title-3d-container {
+      transform-style: preserve-3d;
+      transform: rotateX(10deg) rotateY(10deg);
+      transition: transform 0.3s ease;
+    }
+
+    .top-section h1 {
+      font-size: 3rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      mix-blend-mode: overlay;
+      color: rgba(255, 255, 255, 0.8);
+      position: relative;
+      transform: translateZ(50px);
+    }
+
+    .home-button {
+      position: fixed;
+      top: 2rem;
+      left: 2rem;
+      z-index: 1000;
+      padding: 0.8rem 1.5rem;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 50px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .home-button:hover {
+      background: rgba(26, 26, 26, 0.9);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      padding: 4rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      margin-top: -3vh;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .resource-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(26, 26, 26, 0.8);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      min-height: 300px;
+      opacity: 0;
+      animation: revealCard 0.8s forwards;
+      animation-delay: calc(var(--order) * 0.1s);
+      display: flex;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .resource-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      box-shadow: 0 0 20px 3px var(--glow-color-dark);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .resource-card:hover::after {
+      opacity: 1;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(255, 153, 204, 0.5);
+    }
+
+    .resource-preview {
+      width: 35%;
+      position: relative;
+      aspect-ratio: 4 / 3;
+      background: rgba(26, 26, 26, 0.5);
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .preview-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.5s ease;
+    }
+
+    .resource-card:hover .preview-image {
+      transform: scale(1.05);
+    }
+
+    .resource-info {
+      padding: 1.5rem;
+      width: 65%;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .resource-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+      color: #fff;
+      position: relative;
+      display: inline-block;
+      line-height: 1.3;
+    }
+
+    .resource-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: width 0.3s ease;
+    }
+
+    .resource-card:hover .resource-title::after {
+      width: 100%;
+    }
+
+    .resource-description {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .resource-button {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 153, 204, 0.5);
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      align-self: flex-start;
+      margin-top: auto;
+      margin-right: 0.75rem;
+    }
+
+    .resource-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background: var(--gradient);
+      z-index: -1;
+      transition: width 0.3s ease;
+    }
+
+    .resource-button:hover {
+      color: white;
+      border-color: transparent;
+    }
+
+    .resource-button:hover::before {
+      width: 100%;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: auto;
+    }
+
+    .blur-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--gradient);
+      opacity: 0.05;
+      filter: blur(20px);
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+
+    .resource-card:hover .blur-background {
+      opacity: 0.15;
+    }
+
+    .parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffc1c1' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .intro-section {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 4rem auto;
+      opacity: 0;
+      animation: revealCard 0.8s forwards;
+    }
+
+    .intro-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+
+    .intro-section p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Image Viewer Styles */
+    .image-viewer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(20px);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .image-viewer.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .image-viewer-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      transform: scale(0.8);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .image-viewer.active .image-viewer-content {
+      transform: scale(1);
+    }
+
+    .image-viewer img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease;
+      cursor: grab;
+    }
+
+    .image-viewer img:active {
+      cursor: grabbing;
+    }
+
+    .close-button {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .close-button::before,
+    .close-button::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background: white;
+      top: 50%;
+      left: 50%;
+    }
+
+    .close-button::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .close-button::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    .zoom-buttons-container {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 1rem;
+      z-index: 100000;
+    }
+
+    .zoom-button {
+      padding: 0.8rem 1.5rem;
+      background: var(--gradient);
+      border-radius: 50px;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .zoom-button:hover {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1024px) {
+      .resource-grid {
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .top-section h1 {
+        font-size: 2rem;
+      }
+      .content-wrapper {
+        padding: 2rem 1rem;
+      }
+      .resource-grid {
+        grid-template-columns: 1fr;
+      }
+      .resource-card {
+        flex-direction: column;
+        min-height: auto;
+      }
+      .resource-preview {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .resource-info {
+        width: 100%;
+        padding: 1.25rem;
+      }
+      .resource-title {
+        font-size: 1.3rem;
+      }
+      .resource-description {
+        font-size: 0.85rem;
+      }
+      .image-viewer img {
+        max-width: 95%;
+      }
+      .close-button {
+        top: 1rem;
+        right: 1rem;
+      }
+      .zoom-buttons-container {
+        bottom: 1rem;
+      }
+      .zoom-button {
+        padding: 0.8rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Image Viewer -->
+  <div class="image-viewer">
+    <button class="close-button"></button>
+    <div class="image-viewer-content">
+      <img src="" alt="Full screen image">
+    </div>
+    <div class="zoom-buttons-container">
+      <button class="zoom-button zoom-in-button">Zoom In</button>
+      <button class="zoom-button zoom-out-button">Zoom Out</button>
+    </div>
+  </div>
+
+  <div class="parallax-bg"></div>
+  <div id="particles-js"></div>
+
+  <div class="top-section">
+    <div class="title-3d-container">
+      <h1>1984</h1>
+    </div>
+  </div>
+
+  <a href="index.html" class="home-button">← Back to Home</a>
+
+  <div class="content-wrapper">
+    <div class="intro-section">
+      <h2>1984 - George Orwell</h2>
+      <p>This collection contains comprehensive resources for analyzing George Orwell's 1984, including historical context explorations, thematic analyses, and modern-day comparisons. Materials cover both literary elements and contemporary relevance.</p>
+    </div>
+
+    <div class="resource-grid">
+      <!-- Context of Composition -->
+      <div class="resource-card" style="--order: 1">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="context-composition-preview.png" alt="Historical Context" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Context of Composition</h2>
+          <p class="resource-description">Presentation analyzing the WWII-era context of the book's creation, exploring political climates and social influences that shaped Orwell's dystopian vision.</p>
+          <a href="https://docs.google.com/presentation/d/1RUvjF4bI9oKtcM0EJdfBVaPqIM20sHTXIemrJ2eaY6E/present?slide=id.p" class="resource-button" target="_blank">View Presentation</a>
+        </div>
+      </div>
+
+      <!-- Context Assignment Now -->
+      <div class="resource-card" style="--order: 2">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="modern-context-preview.png" alt="Modern Context" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Context Assignment: Now</h2>
+          <p class="resource-description">Comparative analysis linking historical themes from 1984 to contemporary societal developments and political structures.</p>
+          <a href="https://docs.google.com/document/d/1rrhwfwb4OGtOBgzKxKqUFUFR0E5wCRT_f4UhhPnxBck/edit?tab=t.0" class="resource-button" target="_blank">View Document</a>
+        </div>
+      </div>
+
+      <!-- Fake News -->
+      <div class="resource-card" style="--order: 3">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="fake-news-preview.png" alt="Propaganda Analysis" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Fake News Analysis</h2>
+          <p class="resource-description">Critical examination of propaganda techniques in 1984 compared to modern misinformation strategies and media literacy.</p>
+          <a href="https://docs.google.com/document/d/1WEdm3FpnlP0U2gwNgvqWQRBubWwkNyUAM04WMeV_vs4/edit?tab=t.0" class="resource-button" target="_blank">View Document</a>
+        </div>
+      </div>
+
+      <!-- Theme Assignment 1 -->
+      <div class="resource-card" style="--order: 4">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="totalitarianism-preview.png" alt="Totalitarianism" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Theme assignment 1</h2>
+          <p class="resource-description">In-depth analysis of totalitarian themes in 1984, exploring mechanisms of state control and individual suppression.</p>
+          <a href="https://docs.google.com/presentation/d/1gytJlyiica4tBJrR60SNdOwGOB6u1bH6T2MNVwRh9U8/present?slide=id.p" class="resource-button" target="_blank">View Presentation</a>
+        </div>
+      </div>
+
+      <!-- Symbol Assignment -->
+      <div class="resource-card" style="--order: 5">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="big-brother-preview.png" alt="Big Brother" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Symbol assignment</h2>
+          <p class="resource-description">Exploration of the Big Brother motif as a symbol of surveillance states and psychological manipulation techniques.</p>
+          <a href="https://docs.google.com/presentation/d/1R56eoUpv5ulbeEFXoxO0wduaXsh-DZ0ikAFbSzwFjTo/present?slide=id.p" class="resource-button" target="_blank">View Presentation</a>
+        </div>
+      </div>
+
+      <!-- Global Issue -->
+      <div class="resource-card" style="--order: 6">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="modern-issues-preview.png" alt="Modern Issues" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Global issue sssignment</h2>
+          <p class="resource-description">Examination of enduring social issues from 1984 in contemporary contexts, with direct textual references.</p>
+          <a href="https://docs.google.com/document/d/1dCl6i6998eXHQ22lnwZoaiAOaC6X0JVEDXWiT0-hcC4/edit?tab=t.0" class="resource-button" target="_blank">View Document</a>
+        </div>
+      </div>
+
+      <!-- Theme Assignment 2 -->
+      <div class="resource-card" style="--order: 7">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="theme-poster-preview.png" alt="Thematic Poster" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Thematic assignment 2</h2>
+          <p class="resource-description">Visual analysis of key themes through poster design, incorporating textual evidence and symbolic representation.</p>
+          <a href="#" class="resource-button" target="_blank">View Image</a>
+        </div>
+      </div>
+
+      <!-- Close Reading -->
+      <div class="resource-card" style="--order: 8">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="close-reading-preview.png" alt="Text Analysis" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Close Reading</h2>
+          <p class="resource-description">Detailed linguistic analysis of selected passages, examining Orwell's narrative techniques and hidden meanings.</p>
+          <a href="#" class="resource-button" target="_blank">View Image</a>
+        </div>
+      </div>
+
+      <!-- Intertextuality -->
+      <div class="resource-card" style="--order: 9">
+        <div class="blur-background"></div>
+        <div class="resource-preview">
+          <img src="intertextuality1984-preview.png" alt="Cultural Connections" class="preview-image">
+        </div>
+        <div class="resource-info">
+          <h2 class="resource-title">Intertextuality</h2>
+          <p class="resource-description">Analysis of 1984's cultural connections and influences on subsequent dystopian works and political discourse.</p>
+          <a href="https://docs.google.com/document/d/16_U5ZeGBziDp4r4-anKCDHFIHxLvdd6FaQHHBnXWVrg/edit?tab=t.0" class="resource-button" target="_blank">View Document</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Particle.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
+  <script>
+    // Initialize Particles.js
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffc1c1"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          }
+        },
+        "opacity": {
+          "value": 0.3,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": true,
+            "speed": 2,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffc1c1",
+          "opacity": 0.2,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 1,
+          "direction": "none",
+          "random": true,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "grab"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 140,
+            "line_linked": {
+              "opacity": 0.5
+            }
+          },
+          "push": {
+            "particles_nb": 4
+          }
+        }
+      },
+      "retina_detect": true
+    });
+
+    // Custom Cursor Logic
+    const cursor = document.querySelector('.cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
+    const links = document.querySelectorAll('a, button, .resource-card');
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+
+      setTimeout(() => {
+        cursorFollower.style.left = e.clientX + 'px';
+        cursorFollower.style.top = e.clientY + 'px';
+      }, 50);
+    });
+
+    links.forEach(link => {
+      link.addEventListener('mouseenter', () => {
+        cursor.classList.add('hover');
+        cursorFollower.classList.add('hover');
+      });
+      link.addEventListener('mouseleave', () => {
+        cursor.classList.remove('hover');
+        cursorFollower.classList.remove('hover');
+      });
+    });
+
+    // 3D Title Animation
+    const title3dContainer = document.querySelector('.title-3d-container');
+    document.addEventListener('mousemove', (e) => {
+      const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+      const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+      title3dContainer.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+    });
+
+    // Scroll Animations
+    const cards = document.querySelectorAll('.resource-card, .intro-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(card => {
+      observer.observe(card);
+    });
+
+    // Card Hover Tilt Effect
+    document.addEventListener('mousemove', (e) => {
+      const cards = document.querySelectorAll('.resource-card');
+      const mouseX = e.clientX / window.innerWidth - 0.5;
+      const mouseY = e.clientY / window.innerHeight - 0.5;
+
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const cardCenterX = rect.left + rect.width / 2;
+        const cardCenterY = rect.top + rect.height / 2;
+
+        const distX = e.clientX - cardCenterX;
+        const distY = e.clientY - cardCenterY;
+
+        const maxDist = 300;
+        const dist = Math.sqrt(distX * distX + distY * distY);
+
+        if (dist < maxDist) {
+          const strength = 1 - dist / maxDist;
+          const tiltX = mouseY * 10 * strength;
+          const tiltY = -mouseX * 10 * strength;
+          card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-5px)`;
+        } else {
+          card.style.transform = '';
+        }
+      });
+    });
+
+    // Image Viewer Functionality
+    const imageViewer = document.querySelector('.image-viewer');
+    const closeButton = document.querySelector('.close-button');
+    const viewerImage = document.querySelector('.image-viewer img');
+
+    let currentScale = 1;
+    let currentTranslateX = 0;
+    let currentTranslateY = 0;
+
+    function updateTransform() {
+      viewerImage.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(${currentScale})`;
+    }
+
+    const zoomInButton = document.querySelector('.zoom-in-button');
+    const zoomOutButton = document.querySelector('.zoom-out-button');
+
+    zoomInButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentScale += 0.1;
+      updateTransform();
+    });
+
+    zoomOutButton.addEventListener('click', (e) => {
+      e.stopPropagation();
+      currentScale = Math.max(0.1, currentScale - 0.1);
+      updateTransform();
+    });
+
+    let isDragging = false;
+    let startX, startY;
+
+    viewerImage.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isDragging = true;
+      startX = e.clientX - currentTranslateX;
+      startY = e.clientY - currentTranslateY;
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        currentTranslateX = e.clientX - startX;
+        currentTranslateY = e.clientY - startY;
+        updateTransform();
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    document.querySelectorAll('.resource-button').forEach(button => {
+      button.addEventListener('click', (e) => {
+        if(button.textContent.includes('View Image')) {
+          e.preventDefault();
+          currentScale = 1;
+          currentTranslateX = 0;
+          currentTranslateY = 0;
+          updateTransform();
+          const imageSrc = button.closest('.resource-card').querySelector('.preview-image').src;
+          viewerImage.src = imageSrc;
+          imageViewer.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    function closeImageViewer() {
+      imageViewer.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    closeButton.addEventListener('click', closeImageViewer);
+    imageViewer.addEventListener('click', (e) => {
+      if(e.target === imageViewer) closeImageViewer();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && imageViewer.classList.contains('active')) {
+        closeImageViewer();
+      }
+    });
+  </script>
+</body>
+</html>
